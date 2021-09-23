@@ -7,8 +7,11 @@ import Menu from './../../components/Menu';
 import HeaderNew from '../../components/NavBar';
 import MenuNew from '../../components/MenuComponent';
 import axios from 'axios'
+import { Table, Icon } from 'semantic-ui-react'
+
 
 const Cadastro = () => {
+    
     
     const [Name, setName] = useState()
     //const [lastName, setlastName] = useState()
@@ -20,7 +23,7 @@ const Cadastro = () => {
 
 const handleSubmit = async(event, values) => {
     event.preventDefault()
-    CreateStudent()
+    AlterUser()
 }
 
 const LoadToken = () => {
@@ -39,6 +42,24 @@ const URLgetstudent = 'http://127.0.0.1:8000/api/v1/user/GetAllUsers'
                 .then(resp => setlistUsers(resp.data))
                 
     }
+
+    const [currentuser, setCurrentuser] = useState();
+    
+    const renderRows = () => {
+      const list = listUsers || []
+      console.log(list)
+      return list.map(dados => (
+        <Table.Row  onClick = {e => console.log(e)}>
+          <Table.Cell ><Icon name='edit' onClick = { () => setCurrentuser(dados)}/></Table.Cell>
+          <Table.Cell>{dados.id}</Table.Cell>
+          <Table.Cell>{dados.name}</Table.Cell>
+          <Table.Cell>{dados.email}</Table.Cell>
+          <Table.Cell>**********************************</Table.Cell>
+        </Table.Row>
+  
+      ))
+    }
+
     
     //const URLgetcourse = 'http://127.0.0.1:8000/api/v1/course'
     
@@ -50,16 +71,23 @@ const URLgetstudent = 'http://127.0.0.1:8000/api/v1/user/GetAllUsers'
                     //setlistCorse(resp.data)})
     //}
 
-    const CreateStudent = async () => {
-        try {const {data} = await axios.post('http://127.0.0.1:8000/api/v1/student', { 
+    const AlterUser = async () => {
+        try {const {data} = await axios.post('http://127.0.0.1:8000/api/v1/user/update', { 
             //CPF: cpf,
            // name: Name +" "+lastName,
+            id: currentuser.id,
+            name: Name,
             email: email,
             password: password,
            // birth_date: birthdate,
             //course: selectedcourse,
          }, {headers:{Authorization:`Bearer ${LoadToken()}`}})
-            console.log(data)
+         if(data.id > 0){
+          alert('Alterado!')
+          getUsers()
+        }else{
+          alert('Não Cadastrado!')
+        }
         } catch (error) {
             console.log(error.response)
         }
@@ -77,14 +105,14 @@ const URLgetstudent = 'http://127.0.0.1:8000/api/v1/user/GetAllUsers'
     <MenuNew></MenuNew>
     
   <div style={{display:'flex', alignItems:'center', justifyContent:'center', height:'40vh'}}>
-  <CadastroName>Cadastro de Usuarios</CadastroName>
+  <CadastroName>Usuarios do Sistema</CadastroName>
   </div>
   <Form onSubmit = {handleSubmit}>
       <Form.Field>
-        <input onChange={e => setName(e.target.value)} type='text' placeholder='Nome' />
+        <input onChange={e => setName(e.target.value)} type='text' placeholder={currentuser && currentuser.name}/>
       </Form.Field>
       <Form.Field>
-        <input onChange={e => setemail(e.target.value)} type='text' placeholder='Email' />
+        <input onChange={e => setemail(e.target.value)} type='text' placeholder={currentuser && currentuser.email} />
       </Form.Field>
       <Form.Field inline>
         <input onChange={e => setpassword(e.target.value)} type='password' placeholder='Password' />
@@ -96,7 +124,22 @@ const URLgetstudent = 'http://127.0.0.1:8000/api/v1/user/GetAllUsers'
     </div>
   </Form>
   <div style={{padding:'2rem'}}>
-    <TableUers list={listUsers}/>
+  <Table celled selectable>
+    <Table.Header>
+      <Table.Row>
+      <Table.HeaderCell></Table.HeaderCell>
+        <Table.HeaderCell>ID</Table.HeaderCell>
+        <Table.HeaderCell>Nome</Table.HeaderCell>
+        <Table.HeaderCell>Email</Table.HeaderCell>
+        <Table.HeaderCell >Password</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      
+      {renderRows()}
+      
+    </Table.Body>
+  </Table>
   </div>
 </Container>)
 }

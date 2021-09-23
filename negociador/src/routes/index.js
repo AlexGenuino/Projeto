@@ -40,16 +40,17 @@ function Routes(){
     
     const UserLogged = () => {
         if(userData) return <>                        
-        <Route path ="/adm/cadastro" component={Cadastro} exact/>
+        <Route path ="/adm/users" component={Cadastro} exact/>
         <Route path ="/adm/cadastrocourse" component={CadastroCourse} exact/>
         <Route path ="/adm/financeiro" component={Financeiro} exact/>
-        <Route path ="/home" component={HomeAll} />
+        <Route path ="/home" component={HomeAll} exact/>
         <Route path ="/adm/cadastroproducts" component={cadastroproducts} />
         <Route path ="/adm/listusers" component={listusers} />
+        <Route path ="/" component={HomeAll} exact/>
         
         
         </>
-        return <Route path = "/home" component={Login} exact/>
+        return <Route path = "/" component={Login} exact/>
     }
     return (
         <UserContext.Provider value={{userData, handlerUserLogin}}>

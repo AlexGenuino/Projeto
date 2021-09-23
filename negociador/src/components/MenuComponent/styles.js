@@ -43,7 +43,7 @@ export const View = styled.div`
     background: slategrey;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: row;
     position: fixed;
     z-index: 12;

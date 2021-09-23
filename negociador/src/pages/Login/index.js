@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import { Container } from './styles';
 import { Button, Form, Segment } from 'semantic-ui-react'
 import userContext from '../../context/userContext'
+import Logo from '../../img/LogoNike'
 
 const Login = () => {
 
@@ -17,7 +18,9 @@ const Login = () => {
   return (
 
     <Container>
-        
+          <div style={{marginBottom:'30px'}}>
+            <Logo/>
+          </div>
            <Segment>
                 <Form>
                 <Form.Input

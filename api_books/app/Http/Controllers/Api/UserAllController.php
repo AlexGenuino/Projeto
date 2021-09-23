@@ -36,5 +36,27 @@ class UserAllController extends Controller
         }
     }
 
+    public function update(Request $request){
+        $data = $request->all();
+
+        if(!$request->has('password') && !$request->get('password'))
+        {
+            $data['password'] = bcrypt($data['password']);
+        }else {unset($data['password']);}
+
+        try{
+            $user = $this->user->findOrFail($data['id']);
+            $user->update($data);
+            
+            return response()->json($user, 200);
+
+        }catch(\Exception $e){
+           
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
+    }
+
+
 
 }

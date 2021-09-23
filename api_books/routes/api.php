@@ -52,7 +52,7 @@ Route::prefix('v1')->namespace('Api')->group(function(){
 
             //    /USER = NO METODO GET: ENVIAR O TOKEN, RETORNA OS DADOS DO USUARIO
             Route::resource('user', 'UserController');
-
+            Route::post('user/update', 'UserAllController@update');
             
 
         });

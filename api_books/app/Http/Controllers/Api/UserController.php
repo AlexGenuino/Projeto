@@ -62,6 +62,8 @@ class UserController extends Controller
         }
     }
 
+    
+
     // = /user (metodo GET) => RETORNA OS DADOS DO USUARIO LOGADO
     //ENVIAR O TOKEN NO HEADER
     public function show()

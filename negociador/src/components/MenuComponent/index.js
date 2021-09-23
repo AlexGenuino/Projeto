@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, StyleMenuTop, ItensMenu, Container, View, StyleIcons, DivImg, SvgHoverWhats, SvgHoverFace, SvgHoverinsta, StyleMenu} from './styles';
 import { useHistory  } from "react-router-dom";
 import { AiOutlineWhatsApp, AiFillInstagram, AiOutlineFacebook } from "react-icons/ai"
+import Logo from '../../img/Logo'
 
 const MenuComponent = () => {
 
@@ -16,13 +17,13 @@ const MenuComponent = () => {
       <StyleMenuTop>
         <View>
               
-              
+              <Logo/>
         </View>
       </StyleMenuTop>
       <StyleMenu>
         <Menu>
           <ItensMenu onClick={() => history.push('/home')}>Home</ItensMenu>
-          <ItensMenu onClick={() => history.push('/adm/cadastro')}>Cadastro de Usuários</ItensMenu>
+          <ItensMenu onClick={() => history.push('/adm/users')}>Usuários do Sistema</ItensMenu>
           <ItensMenu onClick={() => history.push('/adm/cadastroproducts')}>Cadastro de Produtos</ItensMenu>
          
         </Menu>
